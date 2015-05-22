@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.lemurproject.galago</groupId>
+  <artifactId>core</artifactId>
+  <versioning>
+    <versions>
+      <version>3.8-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20150522021524</lastUpdated>
+  </versioning>
+</metadata>
