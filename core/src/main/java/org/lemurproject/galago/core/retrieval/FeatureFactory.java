@@ -215,6 +215,21 @@ public class FeatureFactory {
   }
 
   public String getClassName(Node node) throws Exception {
+   if (node.getOperator().equals("feature")) {
+     String defaultParam = node.getDefaultParameter();
+     if (defaultParam.equals("bm25f")) {
+       return "org.lemurproject.galago.contrib.retrieval.iterator.BM25FieldScoringIterator";
+     } else if (defaultParam.equals("pl2f")) {
+       return "org.lemurproject.galago.contrib.retrieval.iterator.PL2FieldScoringIterator";
+     } else if (defaultParam.equals("dfr")) {
+       return "org.lemurproject.galago.contrib.retrieval.iterator.DFRScoringIterator";
+     } else if (defaultParam.equals("dirichlet-raw")) {
+       return "org.lemurproject.galago.contrib.retrieval.iterator.DirichletRawScroingIterator";
+     } else if (defaultParam.equals("log")) {
+       return LogarithmIterator.class.getName();
+     }
+   }
+
     String operator = node.getOperator();
 
     OperatorSpec operatorType = operatorLookup.get(operator);
