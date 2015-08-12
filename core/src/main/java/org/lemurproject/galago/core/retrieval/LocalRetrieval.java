@@ -17,7 +17,9 @@ import org.lemurproject.galago.core.retrieval.traversal.Traversal;
 import org.lemurproject.galago.utility.CmpUtil;
 import org.lemurproject.galago.utility.Parameters;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -277,19 +279,23 @@ public class LocalRetrieval implements Retrieval {
     }
 
     private Node transformQuery(List<Traversal> traversals, Node queryTree, Parameters queryParams) throws Exception {
-        System.out.println("Beginning:\n"+queryTree.toPrettyString());
+        PrintWriter pw = new PrintWriter(new FileWriter("/Users/hzhao/tmp/galagotaversal.log", true));
+        pw.println(new Date().toString());
+        pw.println("Beginning:\n"+queryTree.toPrettyString());
         for (Traversal traversal : traversals) {
-      System.out.println("Before:"+traversal.getClass());
+        pw.println("Before:"+traversal.getClass());
             String beforestr = queryTree.toPrettyString();
 //            System.out.println("Before:\n"+queryTree.toPrettyString());
             queryTree = traversal.traverse(queryTree, queryParams);
-      System.out.println("After:"+traversal.getClass());
+        pw.println("After:"+traversal.getClass());
             String afterstr = queryTree.toPrettyString();
 //            System.out.println("After:\n"+queryTree.toPrettyString());
             if (!afterstr.equals(beforestr)) {
-                System.out.println("Changed:\n"+afterstr);
+                pw.println("Changed:\n"+afterstr);
             }
         }
+        pw.flush();
+        pw.close();
         return queryTree;
     }
 
