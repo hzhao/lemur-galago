@@ -6,9 +6,7 @@ package org.lemurproject.galago.core.eval;
 import org.lemurproject.galago.utility.compare.NaturalOrderComparator;
 import org.lemurproject.galago.utility.Parameters;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -91,6 +89,33 @@ public class QuerySetResults {
         }
 
         in.close();
+    }
+
+    /**
+     * save QuerySetResults to local file
+     * @param runlabel
+     * @param filename
+     * @throws IOException
+     */
+    public void outputRanking(String runlabel, String filename) throws IOException {
+        PrintWriter pw = new PrintWriter(new FileWriter(filename));
+        for(String query : querySetResults.keySet()) {
+            QueryResults queryResults = querySetResults.get(query);
+            for(EvalDoc evalDoc : queryResults.getIterator()) {
+                pw.printf("%s Q0 %s %d %s %s\n", query, evalDoc.getName(), evalDoc.getRank(), formatScore(evalDoc.getScore()), runlabel);
+            }
+        }
+        pw.flush();
+        pw.close();
+    }
+
+    protected static String formatScore(double score) {
+        double difference = Math.abs(score - (int) score);
+
+        if (difference < 0.00001) {
+            return Integer.toString((int) score);
+        }
+        return String.format("%10.8f", score);
     }
 
     /**
