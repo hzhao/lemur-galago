@@ -279,7 +279,7 @@ public class LocalRetrieval implements Retrieval {
     }
 
     private Node transformQuery(List<Traversal> traversals, Node queryTree, Parameters queryParams) throws Exception {
-        PrintWriter pw = new PrintWriter(new FileWriter("/Users/hzhao/tmp/galagotaversal.log", true));
+        PrintWriter pw = new PrintWriter(new FileWriter(System.getProperty("user.home") + "/galagotaversal.log", true));
         pw.println(new Date().toString());
         pw.println("Beginning:\n"+queryTree.toPrettyString());
         for (Traversal traversal : traversals) {
